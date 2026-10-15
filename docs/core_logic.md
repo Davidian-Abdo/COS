@@ -27,7 +27,7 @@ The owner describes the core problem as the **gap between four things**: **plann
 
 *(The full walk-through, with what goes wrong, is in [REALITY_CHECK.md](REALITY_CHECK.md).)*
 
-**A slab pour blocked by a late rebar delivery.** At 10:00 on Monday, the rebar foreman writes in the site group: "the steel hasn't come", with a photo. OCOS reads it, links it to the level-3 slab and to the supplier's promise for Monday, and asks the site manager to confirm with one tap. Once confirmed, the slab shows **not ready**, with what else is affected: the rebar crew has nothing to do tomorrow, the concrete order and the pump booked for Thursday are at risk, next week's walls depend on this slab. OCOS proposes a job for the buyer ("get a confirmed new delivery time from the supplier by 14:00") and two recovery options, each with its consequences. The site manager chooses. OCOS records the choice and follows up.
+**A slab pour blocked by a late rebar delivery.** At 10:00 on Monday, the rebar foreman writes in the site group: "the steel hasn't come", with a photo. OCOS reads it, links it to the level-3 slab and to the supplier's promise for Monday, and asks the site manager to confirm with one tap. Once confirmed, the slab still shows **expected ready** — the supplier's promise runs to the end of Monday — but its reasons now show the foreman's report, and OCOS proposes a job for the buyer ("get a confirmed new delivery time from the supplier by 14:00"). If nothing arrives by the end of the day, the promise is **missed** and the slab shows **not ready**, with what else is affected: the rebar crew has nothing to do tomorrow, the concrete order and the pump booked for Thursday are at risk, next week's walls depend on this slab. OCOS proposes two recovery options, each with its consequences. The site manager chooses. OCOS records the choice and follows up.
 
 **A subcontractor's missed promise, learned at 7 am.** At Tuesday's meeting the electrician promised the cable sleeves by Wednesday 17:00; OCOS took that promise from the meeting's action list. Thursday at 07:05 the electrician writes "tomorrow, short of staff". OCOS marks the promise **missed**, records the new, **tentative** promise, and shows the site manager which work it blocks *before* the crew starts. If the site manager moves the crew by phone, OCOS records that decision afterwards — it never stands in the way of work on site.
 
@@ -87,7 +87,7 @@ On top of that:
 
 OCOS adapts to the company's roles, approval limits, checklists, forms and words — "situation", "attachement", "PV", "OPR" stay the company's words on screen — through a versioned **company configuration**, without rewriting the core. Basic safety, security and legal protections cannot be switched off. When the written procedure and what really happens differ, OCOS shows the difference to a person; it does not quietly adopt either one.
 
-The owner's *Company Operations Compiler* will eventually draft the whole configuration from a company's documents. In v1.0.0 the proposal is a narrow version that drafts from the company's spreadsheets and tables, with every line reviewed: `TO-CONFIRM (Q-18)`. The planning rhythm OCOS fits into — the company's existing weekly meeting, or a full Last Planner routine: `TO-CONFIRM (Q-05)`.
+The owner's *Company Operations Compiler* will eventually draft the whole configuration from a company's documents. In v1.0.0 the configuration is written by hand with the company; a narrow version that drafts from the company's spreadsheets and tables, with every line reviewed, comes later: `TO-CONFIRM (Q-18)`. The planning rhythm OCOS fits into — the company's existing weekly meeting, or a full Last Planner routine: `TO-CONFIRM (Q-05)`.
 
 ## 9. Living alongside existing software
 
@@ -111,7 +111,7 @@ Compared with existing products: tools such as Touchplan and vPlanner already su
 8. keeps reported, measured, agreed and certified quantities apart and exports evidence packs;
 9. prepares the weekly meeting pack, with PPC and reasons;
 10. keeps a complete, tamper-evident trail;
-11. runs first in shadow mode, then confirm mode, before any limited automatic action.
+11. runs first in shadow mode, then confirm mode; limited automatic actions come only after the pilot.
 
 **Later** (not in v1.0.0): coordination across several companies; libraries of trade knowledge ("domain packs") and integrations built by others; BIM and platform connectors; a governed exchange of tested capabilities; a fuller agent hierarchy; and progressively more automation of routine problem-solving — always under appropriate human authority. How OCOS is offered and paid for: `TO-CONFIRM (Q-09)`; its open-source license: `TO-CONFIRM (Q-19)`.
 

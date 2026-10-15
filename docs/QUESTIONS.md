@@ -161,7 +161,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - ANSWER:
 - NOTES:
 
-## Q-16 Beam-stack products in v1.0.0
+## Q-16 Beamstack products in v1.0.0
 - why it matters: Planitor and Chantier Manager are first-class integrations in the idea, but OCOS must be useful without them. Building their adapters only makes sense if the pilot uses them and they can export data.
 - options: (a) not in v1.0.0; optional adapters for the next release (b) in v1.0.0 if the pilot uses them (c) v1.0.0 built primarily around them
 - recommendation: (b) — real data without extra effort for the pilot; the generic adapter contract keeps OCOS independent. Say in NOTES whether each product has an export or API today.
@@ -228,7 +228,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 
 ## Q-23 Technology stack
 - why it matters: the language and database shape who can contribute and how fast a small team builds. Reading MS Project and Primavera files needs MPXJ, a Java library.
-- options: (a) Python (typed) back end, TypeScript web interface, PostgreSQL for the event table and projections; MPXJ run in a separate adapter process (b) TypeScript everywhere, PostgreSQL (c) Java/Kotlin back end (native MPXJ), TypeScript interface, PostgreSQL (d) the language the Beam-stack products use, named in NOTES
+- options: (a) Python (typed) back end, TypeScript web interface, PostgreSQL for the event table and projections; MPXJ run in a separate adapter process (b) TypeScript everywhere, PostgreSQL (c) Java/Kotlin back end (native MPXJ), TypeScript interface, PostgreSQL (d) the language the Beamstack products use, named in NOTES
 - recommendation: (a) — best libraries for spreadsheets, documents and AI providers; MPXJ isolated in one adapter.
 - evidence: F-11; V-25
 - blocks: architecture §11

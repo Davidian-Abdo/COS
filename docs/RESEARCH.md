@@ -157,7 +157,7 @@ Status: **supported**, **contradicted**, or **unproven** (no evidence either way
 | V-23 | Hierarchical agent runtime with global and domain stewards (IDEA §6) | unproven for v1 | F-30, F-39 | v1: three narrow agent roles; people are stewards |
 | V-24 | Tamper-evident append-only audit (IDEA §7) | supported as a market expectation | F-10, F-24 | Keep; disputes make it valuable; integrity ≠ truth stays explicit |
 | V-25 | Python back end (round-1 Q-22 rec.) | supported with one caveat | F-11 | Schedule reading relies on MPXJ (Java); isolate it in an adapter (Python wrapper to verify during build) |
-| V-26 | "OCOS works without Beam-stack products" (IDEA §11) | supported | F-13, F-26 | Keep; Beam stack remains optional |
+| V-26 | "OCOS works without Beamstack products" (IDEA §11) | supported | F-13, F-26 | Keep; Beamstack remains optional |
 | V-27 | Adoption is not addressed in IDEA.md | gap | F-14, F-16, F-36 | Add an adoption strategy: no field app, one operator, weekly meeting as the anchor, concierge pilot |
 
 ### 9.1 Specific checks requested

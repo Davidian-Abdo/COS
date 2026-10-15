@@ -178,8 +178,8 @@ The contractor's procedures are a quality manual (Word/PDF), an approval matrix 
 |---|---|
 | DC-1.1, DC-2.2 | IDEA_v2 §5; architecture §4.1; spec SPEC-130–SPEC-136 |
 | DC-1.2 | spec SPEC-032, SPEC-033 |
-| DC-1.3 | architecture §4.7; spec SPEC-066 |
-| DC-1.4 | architecture §4.9; spec SPEC-087, SPEC-134 |
+| DC-1.3 | architecture §4.9; spec SPEC-066 |
+| DC-1.4 | architecture §4.1, §4.11; spec SPEC-087, SPEC-134 |
 | DC-1.5 | spec SPEC-069 |
 | DC-2.1 | spec SPEC-075, SPEC-121 |
 | DC-2.3 | spec SPEC-032, SPEC-062 |
@@ -190,7 +190,7 @@ The contractor's procedures are a quality manual (Word/PDF), an approval matrix 
 | DC-4.2 | spec SPEC-192 |
 | DC-4.3 | spec SPEC-024; question Q-17 |
 | DC-4.4 | spec SPEC-131 |
-| DC-5.1 | IDEA_v2 §11; spec SPEC-110 |
+| DC-5.1 | IDEA_v2 §11; spec SPEC-110 (moved to later by the study) |
 | DC-5.2 | spec SPEC-111 |
 | DC-5.3, DC-5.4 | spec SPEC-108 |
 | DC-5.5 | spec SPEC-112 |
@@ -225,8 +225,8 @@ The contractor's procedures are a quality manual (Word/PDF), an approval matrix 
 |---|---|---|---|
 | C-1 | "Event sourcing, hash chains, projections, deterministic clock, replay comparison — this is a research project." | **fixed** | The architecture now states the plain implementation: one events table, projections updated in the same transaction, no bus, no event-store product, derived-event comparison only in the nightly replay (ARCH §6.1 implementation note). |
 | C-2 | "130-odd requirements is a year of work, not months." | **fixed** | A build order in slices, each usable in shadow mode on the pilot, with spec sections mapped to slices (ARCH §17). Slices 1–2 carry no outbound messaging. |
-| C-3 | "Your riskiest dependency is WhatsApp, and you don't know if the route you want is even allowed." | **fixed** | Slice 0 spike proves the channel route before any build (ARCH §17); email-in and upload are permanent fallbacks (SPEC-132); Q-03 recommends the compliant route (business number + chat-export import). |
-| C-4 | "The whole value hangs on the AI reading Darija voice notes and messy French. You have no number for that." | **fixed** | Interpreter feasibility gate before go-live on the pilot's own history, per language, with a threshold; failing languages go to people (SPEC-138, SPEC-133; ARCH §17 slice 0). |
+| C-3 | "Your riskiest dependency is WhatsApp, and you don't know if the route you want is even allowed." | **fixed** | Trial T1 proves the channel route before any channel-adapter task (ARCH §17; the study moved both trials beside slice 1, which needs neither); email-in and upload are permanent fallbacks (SPEC-132); Q-03 recommends the compliant route (business number + chat-export import). |
+| C-4 | "The whole value hangs on the AI reading Darija voice notes and messy French. You have no number for that." | **fixed** | Interpreter feasibility gate before go-live on the pilot's own history, per language, with a threshold; failing languages go to people (SPEC-138, SPEC-133; ARCH §17 trial T2). |
 | C-5 | "Python, plus Java for MPXJ, plus TypeScript, plus an AI vendor and speech-to-text — too many moving parts." | answered | MPXJ runs in one isolated adapter process and is needed only to read schedule files; if the pilot's planner exports the schedule to Excel, it can wait. The AI vendor sits behind one gateway. Three languages for three clearly separated parts is ordinary for a web product (Q-23). |
 
 **Result: 15 objections — 9 fixed, 6 answered.**

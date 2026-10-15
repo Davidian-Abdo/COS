@@ -5,9 +5,9 @@
 ## What changed from IDEA.md and why
 
 1. **The problem is named in the industry's own terms** — make-ready, constraints, look-ahead, weekly work plan, PPC — because the method exists and works when run; what fails is the effort to run it (§2, §3; RESEARCH F-01–F-07, F-15, F-16).
-2. **Messaging is the first input channel, not one adapter among many**: field facts arrive as WhatsApp-style messages, photos and voice notes (§5; F-09, F-36, V-07).
+2. **Messaging is the first input channel, not one adapter among many**: field facts arrive as WhatsApp-style messages, photos and voice notes (§5; F-09, F-36, V-07). *Study:* the evidence for this is weak; the channel trial measures it on the pilot's own chat history, and OCOS cannot join existing groups through the official API (F-32).
 3. **Interpretation is the main AI job, and every interpretation is confirmed by a person in v1.0.0**, with its accuracy measured (§5, §7; F-39, F-30, V-08).
-4. **Foremen, subcontractors and suppliers get no new app**; one operator per project reviews what OCOS reads (§14; F-14, F-36, V-05).
+4. **Foremen, subcontractors and suppliers get no new app**; one operator per project reviews what OCOS reads (§14; F-14, F-36, V-05). *Study:* the evidence shows field-worker acceptance is a barrier, not that field apps are rejected; this is a low-friction design proposal.
 5. **The weekly coordination meeting is the anchor**: its action list is the main source of commitments, and OCOS's main output is a prepared meeting pack (§3, §8; F-02, F-03, V-09).
 6. **Inspections distinguish hold points from witness points**, and external verifiers (maître d'œuvre, bureau de contrôle) are recorded, not expected to log in (§9; F-17, F-18, V-11).
 7. **Quantities: `reported`, `measured`, `agreed`, `certified`** — the contradictory measurement (attachement) is added; certification is another party's legal act that OCOS only records (§9; F-20–F-25, V-12).
@@ -37,7 +37,7 @@ Construction production depends on many preconditions coming together at the rig
 
 The evidence on what goes wrong:
 
-- **Plans are unreliable.** Typical plan reliability is well below the ~70 % of weekly tasks completed at which productivity gains appear (F-04). Lack of effective look-ahead planning is a major problem in most projects studied (F-05).
+- **Plans are unreliable.** Productivity gains appear when plan reliability reaches about 70 % of weekly tasks completed (F-04); that typical sites are well below this is the authors' inference. Lack of effective look-ahead planning is a major problem in most projects studied (F-05).
 - **What predicts delivery is making work ready ahead**, not just keeping weekly promises: the share of *tasks made ready* in the look-ahead predicts project duration better than weekly plan reliability (F-07).
 - **The method exists but is hard to sustain.** The Last Planner System (LPS) — look-ahead, constraint log, weekly work plan from ready work only, PPC and reasons — works when it is run, but adoption fails on discipline, training and the effort of keeping logs current (F-16). Even among US general contractors, most lean practices are used by a minority (F-16).
 - **The facts are in messages.** Field facts — "steel hasn't come", "sleeves tomorrow", "inspection OK" — arrive in messaging groups, phone calls and paper (F-09, F-12, F-13). Constraint logs are separate spreadsheets (F-31). Someone must turn messages into an up-to-date list of constraints and promises, and nobody has the time (F-14).
@@ -133,17 +133,17 @@ Detect and register; identify affected entities; separate known, uncertain, assu
 
 *(Owner's goal kept.)* OCOS adapts to company practice: the compiler turns organisation charts, procedures, forms, spreadsheets, approval matrices and terminology into a validated, versioned configuration, surfacing ambiguities and conflicts for people.
 
-*v1.0.0 reality* (F-13, DC-5.1): company procedures are mostly Word, PDF and Excel. The first step is a **narrow compiler**: the interpreter drafts requirement templates, roles, grants and vocabulary from the company's tables; a person accepts, edits or rejects every item; a named company approver signs a version after reading plain-language scenario tests. Whether this narrow compiler is in v1.0.0 or the configuration is written by hand: `TO-CONFIRM (Q-18)`.
+*v1.0.0 reality* (F-13, DC-5.1): company procedures are mostly Word, PDF and Excel. The first step is a **narrow compiler**: the interpreter drafts requirement templates, roles, grants and vocabulary from the company's tables; a person accepts, edits or rejects every item; a named company approver signs a version after reading plain-language scenario tests. *Study:* for the first pilot the configuration is written by hand with the contractor, and the narrow compiler comes later: `TO-CONFIRM (Q-18)`.
 
 ## 12. Open ecosystem and interoperability
 
-*(Owner's model kept:* core kernel, protocol implementations, company configurations, domain packs, adapters, operator interfaces, capability exchange; OCOS coexists with existing systems, stays useful without Beam-stack products, and external systems remain authoritative for what they own.)*
+*(Owner's model kept:* core kernel, protocol implementations, company configurations, domain packs, adapters, operator interfaces, capability exchange; OCOS coexists with existing systems, stays useful without Beamstack products, and external systems remain authoritative for what they own.)*
 
 **Minimum viable integration set for v1.0.0** (F-11, F-29): Excel/CSV with confirmed mappings; MS Project and Primavera P6 files (read with an open-source library); one messaging channel (`TO-CONFIRM (Q-03)`); email-in; photo/PDF upload; exports of the weekly pack and evidence packs to PDF/Excel.
 
 **Long term**, through the same adapter contract: IFC, BCF, IDS, COBie, ERP, project platforms (Procore, Autodesk, Aconex), sensors. BIM standards matter for design and handover but play no part in day-to-day readiness on most small and mid-size sites today (F-27–F-29). Whether the pilot needs a connector to a platform it already uses: `TO-CONFIRM (Q-08)`.
 
-**Beam stack** *(owner's)*: Planitor (planning intent, quantities) and Chantier Manager (site execution, validated records) are first-class optional adapters: `TO-CONFIRM (Q-16)`.
+**Beamstack** *(owner's)*: Planitor (planning intent, quantities) and Chantier Manager (site execution, validated records) are first-class optional adapters: `TO-CONFIRM (Q-16)`.
 
 ## 13. Human authority, safety, trust and liability
 
@@ -195,7 +195,7 @@ OCOS's position is the **combination**: capture without data entry + determinist
 8. keeps reported, measured, agreed and certified quantities distinct and exports evidence packs;
 9. prepares the weekly meeting pack and computes PPC, reasons and tasks made ready;
 10. keeps a complete, tamper-evident trace;
-11. runs in shadow mode first, then confirm mode, then bounded autonomy one action type at a time.
+11. runs in shadow mode first, then confirm mode; bounded autonomy, one action type at a time, comes after the pilot (study: not needed for a first pilot).
 
 ## 17. Success criteria *(owner's principle kept; metrics made measurable)*
 
