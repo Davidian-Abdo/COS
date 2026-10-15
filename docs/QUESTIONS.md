@@ -53,10 +53,10 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - NOTES:
 
 ## Q-19 Open-source licence and governance
-- why it matters: the licence decides whether others may build closed products on OCOS; it must be chosen before code is published.
-- options: (a) no licence yet: the repository stays private and nothing is published until you decide (b) Apache-2.0 for everything; you lead as maintainer with a public proposal process (c) AGPL-3.0 for the kernel, Apache-2.0 for schemas, adapters and SDKs (d) (b) or (c), moving to a neutral foundation once other organisations contribute
+- why it matters: the licence decides whether others may build closed products on OCOS; it should be chosen before the first code is pushed, because the repository is already public.
+- options: (a) no licence yet: the repository is public, so code pushed there can be read but not legally reused (all rights reserved) until you decide (b) Apache-2.0 for everything; you lead as maintainer with a public proposal process (c) AGPL-3.0 for the kernel, Apache-2.0 for schemas, adapters and SDKs (d) (b) or (c), moving to a neutral foundation once other organisations contribute
 - recommendation: (b) now, (d) later — the most adoption-friendly, with a patent grant; (c) protects better against a closed copy run as a service. Align with Q-09.
-- default: (a) — the loops can build; nothing is published as open source.
+- default: (a) — the loops can build; nothing is released as open source.
 - evidence: F-26 (the open core is the part incumbents are unlikely to copy)
 - blocks: the repository LICENSE file; publishing any code; IDEA_v2 §19; architecture §11
 - ANSWER:
