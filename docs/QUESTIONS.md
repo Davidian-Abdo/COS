@@ -1,96 +1,53 @@
 # Questions for the owner
 
-These are the decisions only you can make. Each one sets the direction of OCOS v1.0.0. The other documents mark every point that waits for you as `TO-CONFIRM (Q-nn)`.
+**Start with the decisions, not this file.** The seven questions that blocked the first build slice are now three **direction decisions**. Each one offers whole approaches with their consequences, a recommendation that follows from weighted criteria, and a check to run before the choice becomes the spec. You answer each decision with one letter. The method is in [DECIDING.md](DECIDING.md).
 
-*Round 2, 2026-10-15, reordered by the study ([STUDY.md](STUDY.md)) so you can answer fast: **the seven questions that block the first build slice come first**; the rest can wait. Question ids did not change. [RESEARCH.md §9.2](RESEARCH.md#92-round-1-questions-settled-by-the-research) shows which round-1 questions the research settled. No question has been answered yet.*
+| Decision | Replaces | Recommended | Default if silent |
+|---|---|---|---|
+| [D-03 How the code starts](decisions/D-03-code.md) (answer first: it blocks the first build task) | Q-23, Q-19 | B | B, until 2026-10-29 |
+| [D-01 The pilot](decisions/D-01-pilot.md) | Q-01, Q-02 | A | A, until 2026-11-15 |
+| [D-02 Site facts and who may read them](decisions/D-02-site-facts.md) | Q-03, Q-13, Q-21 | B | A, until 2026-11-15 |
 
-## How to answer
+*Round 2, 2026-10-15. The study ([STUDY.md](STUDY.md)) reordered the questions, and the decisions were added the same day. Question ids did not change. [RESEARCH.md §9.2](RESEARCH.md#92-round-1-questions-settled-by-the-research) shows which round-1 questions the research settled. No question or decision has been answered yet.*
 
-**(a) Write your answer.** Open this file on github.com, click the pencil icon (Edit), and write your answer on the `ANSWER:` line of a question — either one of the listed options (for example `(b)`) or your own words. Put any explanation, condition or doubt on the `NOTES:` line.
+## How to answer the questions below
 
-**(b) Save it.** Commit directly to `main`, with a message like `answers: Q-03, Q-07`.
+**(a) Write your answer.** Open this file on github.com, click the pencil icon (Edit), and write your answer on the `ANSWER:` line of a question. It can be one of the listed options (for example `(b)`) or your own words. Put any explanation, condition or doubt on the `NOTES:` line.
 
-**(c) Answer at your own pace.** Answer as many or as few questions as you like, in any order. Each question now states a **default**: what the next working session assumes, behind a `TO-CONFIRM` marker, if the work reaches that point before you answer. A default is never treated as your answer — the marker stays until you answer, and the recommendations are suggestions, not decisions.
+**(b) Save it.** Commit directly to `main`, with a message like `answers: Q-05, Q-07`.
 
-**(d) What happens next.** The next working session reads every newly answered question, updates the documents accordingly, removes the matching `TO-CONFIRM` markers, and writes `APPLIED: <date>` under your answer. If you change your mind later, add a line `REOPEN:` under the question with your reason; it will be treated as open again and the documents will be revised.
+**(c) Answer at your own pace.** Answer as many or as few questions as you like, in any order. Each question states a **default**: what the next working session assumes, behind a `TO-CONFIRM` marker, if the work reaches that point before you answer. A default is never treated as your answer. The marker stays until you answer, and the recommendations are suggestions, not decisions.
 
-Each question has: why it matters; the options, simplest or least risky first; a recommendation; a default; `evidence:` — the research findings (`F-nn`, `V-nn` in RESEARCH.md) that inform the options; and what it blocks.
+**(d) What happens next.** The next working session reads every newly answered question, updates the documents, removes the matching `TO-CONFIRM` markers, and writes `APPLIED: <date>` under your answer. If you change your mind later, add a line `REOPEN:` under the question with your reason. It will be treated as open again and the documents will be revised.
+
+Each question has: why it matters; the options, simplest or least risky first; a recommendation; a default; `evidence:` (the research findings `F-nn` and `V-nn` in RESEARCH.md that inform the options); what it blocks; and `joins:`, the decision it would become part of once it is entangled with others (see [DECIDING.md §8](DECIDING.md#8-when-to-use-a-decision-and-when-a-plain-question)). D-04 and D-05 do not exist yet. They are the likely next groupings.
 
 ---
 
-## Answer these first — they block the first build slice
+## Moved into decisions
 
-*Slice 1 (the readiness board, no AI, nothing sent) and its two trials — the messaging channel (T1) and the AI's reading accuracy (T2) — cannot start properly without these. See [architecture §17](v1.0.0_architecture.md#17-build-order-v100).*
+*These ids stay valid: every `TO-CONFIRM (Q-nn)` marker in the other documents now points to the decision named here. Answer the decision, not the question.*
 
 ## Q-01 Pilot market and region
-- why it matters: the country decides the contract forms and their words (situation, attachement, décompte), who inspects, which data-protection law applies, and which languages the site writes and speaks. It is the question most others depend on.
-- options: (a) the country of a contractor you already know and who would pilot — name them in NOTES (b) Morocco — mostly small and mid-size contractors on paper, Excel and WhatsApp; French and Arabic (c) France — more site software already in use; GDPR (d) the Gulf or wider MENA — FIDIC contracts; big clients impose platforms such as Aconex
-- recommendation: (a) — a willing pilot contractor matters more than the market; if you have none yet, (b), where the gap OCOS fills is widest.
-- default: (b) Morocco — French interface and Moroccan contract vocabulary in the test data; nothing market-specific beyond that is built.
-- evidence: RESEARCH §8; F-13, F-18, F-19, F-20, F-22, F-23, F-35
-- blocks: SPEC-002, SPEC-210; slice 1 test data and vocabulary; trial T2
-- ANSWER:
-- NOTES:
+- moved to: [D-01 The pilot](decisions/D-01-pilot.md)
 
 ## Q-02 Pilot contractor, project and work type
-- why it matters: OCOS checks a list of prerequisites per type of work. The first list must match the pilot, and the type of work decides what can be measured.
-- options: (a) the structural frame of one building — formwork, rebar, concrete pours — by a contractor with its own crews (b) finishing works, where many subcontractors share each floor (c) a civil-works job driven by equipment and deliveries (d) other — name the contractor, project and work type in NOTES
-- recommendation: (a) — a pour has clear prerequisites (rebar, inspection, concrete, pump) and idle crews cost money; (b) if the contractor mostly subcontracts.
-- default: (a) structural frame — the first prerequisite list is the slab pour of [architecture §4.9](v1.0.0_architecture.md#49-company-configuration-pilot-domain-pack-and-narrow-compiler).
-- evidence: F-06, F-17, F-23; REALITY_CHECK scenarios 1–3
-- blocks: SPEC-002, SPEC-066; slice 1 exit check
-- ANSWER:
-- NOTES:
+- moved to: [D-01 The pilot](decisions/D-01-pilot.md)
 
 ## Q-23 Technology stack
-- why it matters: the build loops need one stack, one test command and one CI before the first task. Reading MS Project and Primavera files needs MPXJ, a Java library.
-- options: (a) Python (typed) back end, TypeScript web interface, PostgreSQL; MPXJ in its own small adapter — the same pattern as Chantier Manager (b) TypeScript everywhere, PostgreSQL — the pattern of Bunyan (c) Java or Kotlin back end (MPXJ native), TypeScript interface, PostgreSQL
-- recommendation: (a) — best libraries for spreadsheets, documents and AI providers, and the loops already run Python lanes with PostgreSQL.
-- default: (a).
-- evidence: F-11; V-25
-- blocks: every build task; architecture §11; `.agent.toml` and CI
-- ANSWER:
-- NOTES:
+- moved to: [D-03 How the code starts](decisions/D-03-code.md)
 
 ## Q-19 Open-source licence and governance
-- why it matters: the licence decides whether others may build closed products on OCOS; it should be chosen before the first code is pushed, because the repository is already public.
-- options: (a) no licence yet: the repository is public, so code pushed there can be read but not legally reused (all rights reserved) until you decide (b) Apache-2.0 for everything; you lead as maintainer with a public proposal process (c) AGPL-3.0 for the kernel, Apache-2.0 for schemas, adapters and SDKs (d) (b) or (c), moving to a neutral foundation once other organisations contribute
-- recommendation: (b) now, (d) later — the most adoption-friendly, with a patent grant; (c) protects better against a closed copy run as a service. Align with Q-09.
-- default: (a) — the loops can build; nothing is released as open source.
-- evidence: F-26 (the open core is the part incumbents are unlikely to copy)
-- blocks: the repository LICENSE file; publishing any code; IDEA_v2 §19; architecture §11
-- ANSWER:
-- NOTES:
+- moved to: [D-03 How the code starts](decisions/D-03-code.md)
 
 ## Q-03 How site messages reach OCOS
-- why it matters: field facts arrive as messages, photos and voice notes. WhatsApp's official interface **cannot join the site's existing groups**: it can only create its own groups of at most 8 people. So messages reach OCOS only if someone forwards them, or through exported chats.
-- options: (a) email and upload only — no messaging app in v1.0.0 (b) an OCOS business number: the operator (already in the site groups) forwards what matters, and anyone may write or send voice notes to it (c) as (b), plus a regular export of the site groups ("export chat") to catch what was not forwarded and to measure the baseline (d) reading the existing groups through an unofficial route — against WhatsApp's terms, the number can be banned; not recommended
-- recommendation: (c) — within the platform's terms, no new app for the field, works in shadow mode, and the exports measure how much really arrives by message.
-- default: (a) until you answer; trial T1 does not start.
-- evidence: F-09 (weak), F-32, F-36; V-07, V-16
-- blocks: SPEC-086, SPEC-132; trial T1 (also needs a WhatsApp business account verified by Meta); architecture §4.1, §9
-- ANSWER:
-- NOTES:
+- moved to: [D-02 Site facts and who may read them](decisions/D-02-site-facts.md)
 
 ## Q-13 Records about named people: what is kept, who sees it, for how long
-- why it matters: OCOS records who said, promised and decided what, and reads messages that name workers. Under GDPR or Morocco's law 09-08 this needs a purpose, information of staff, limited retention and sometimes authorisation. Using exported chats for the trial also needs consent. Getting this wrong can stop a pilot.
-- options: (a) people named only inside the contractor's team; outside companies at company level with a contact; no individual performance views; authors pseudonymised in metrics; kept for the project plus the contractual archive period; staff informed in writing before start (b) a policy written with the contractor's legal adviser, described in NOTES (c) everyone named everywhere, with individual statistics
-- recommendation: (a), checked by the contractor's legal adviser.
-- default: (a); no real chat history is used until you answer.
-- evidence: F-35; V-21
-- blocks: SPEC-190; trial T2; architecture §13, §14
-- ANSWER:
-- NOTES:
+- moved to: [D-02 Site facts and who may read them](decisions/D-02-site-facts.md)
 
 ## Q-21 Which AI may read the pilot's messages
-- why it matters: the AI reads message text, photos and voice notes. The provider, its terms and where it runs affect accuracy, cost and legality (data sent abroad).
-- options: (a) no AI on real pilot data yet: the trial runs on anonymised history only (b) one commercial provider under no-training, limited-retention terms, behind OCOS's gateway; a self-hosted model tested as fallback (c) self-hosted open models only, so no data leaves the installation (d) per company: commercial by default, self-hosted on request
-- recommendation: (b) for the pilot once the Q-13 check allows it, with (d) as the long-term design — Darija voice notes and messy messages need the best models now.
-- default: (a).
-- evidence: F-35, F-39; V-08
-- blocks: SPEC-211; trial T2; architecture §4.8, §11, §14
-- ANSWER:
-- NOTES:
+- moved to: [D-02 Site facts and who may read them](decisions/D-02-site-facts.md)
 
 ---
 
@@ -105,6 +62,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a), with an operator time budget of 30 minutes a day (SPEC-205).
 - evidence: F-12, F-14, F-36; V-05
 - blocks: SPEC-004, SPEC-205 budget; architecture §4.1, §4.11
+- joins: D-01 (the operator is part of the pilot)
 - ANSWER:
 - NOTES:
 
@@ -115,6 +73,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: F-01, F-02, F-04, F-07, F-16, F-37
 - blocks: SPEC-006 (slice 2); architecture §4.4
+- joins: D-01
 - ANSWER:
 - NOTES:
 
@@ -125,6 +84,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a) + (b).
 - evidence: F-04, F-05, F-07; V-17
 - blocks: SPEC-202
+- joins: D-04, future: how the pilot is judged (with Q-07, Q-12)
 - ANSWER:
 - NOTES:
 
@@ -135,6 +95,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: F-32; V-17, V-18
 - blocks: SPEC-142, SPEC-201
+- joins: D-02 (the baseline uses the chat exports and their consent)
 - ANSWER:
 - NOTES:
 
@@ -145,6 +106,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: RESEARCH §8; F-39
 - blocks: SPEC-005; architecture §4.1, §4.11
+- joins: D-01 (follows the market; Darija is checked in D-02's T2)
 - ANSWER:
 - NOTES:
 
@@ -155,6 +117,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: F-35
 - blocks: SPEC-210 (before go-live); architecture §11–§13
+- joins: D-02 (hosting region follows the data law)
 - ANSWER:
 - NOTES:
 
@@ -167,6 +130,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: F-10, F-26; RESEARCH §5
 - blocks: SPEC-213; IDEA_v2 §15
+- joins: D-01 (depends on the pilot's tools)
 - ANSWER:
 - NOTES:
 
@@ -177,6 +141,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: F-14 (cost is a barrier), F-26
 - blocks: IDEA_v2 §15; architecture §11
+- joins: D-03 (the licence must fit the business model)
 - ANSWER:
 - NOTES:
 
@@ -189,6 +154,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: F-17, F-18, F-34; V-11
 - blocks: SPEC-031, SPEC-107 (slice 3)
+- joins: D-04, future: authority and when OCOS may act (with Q-11, Q-12)
 - ANSWER:
 - NOTES:
 
@@ -199,6 +165,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (b) with the figures in (a).
 - evidence: F-30, F-33, F-39
 - blocks: SPEC-145; the SPEC-138 thresholds
+- joins: D-04, future
 - ANSWER:
 - NOTES:
 
@@ -211,6 +178,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: F-31; V-20
 - blocks: SPEC-127
+- joins: D-05, future: v1.0.0 scope after slice 1 (with Q-17, Q-18)
 - ANSWER:
 - NOTES:
 
@@ -221,6 +189,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: F-26 (independence is part of the position)
 - blocks: SPEC-122; IDEA_v2 §12
+- joins: D-01 (only if the pilot uses Beamstack products)
 - ANSWER:
 - NOTES:
 
@@ -231,6 +200,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: F-20–F-25; V-12, V-13; REALITY_CHECK scenario 4
 - blocks: SPEC-024 (slice 3)
+- joins: D-05, future
 - ANSWER:
 - NOTES:
 
@@ -243,6 +213,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a) for v1.0.0.
 - evidence: F-34, F-39; V-14, V-15
 - blocks: SPEC-105 (later)
+- joins: D-04, future
 - ANSWER:
 - NOTES:
 
@@ -253,6 +224,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a) for v1.0.0.
 - evidence: F-10, F-24; V-24
 - blocks: SPEC-186 (later)
+- joins: D-05, future
 - ANSWER:
 - NOTES:
 
@@ -263,6 +235,7 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a).
 - evidence: F-13; V-22; REALITY_CHECK scenario 5
 - blocks: SPEC-110 (later)
+- joins: D-05, future
 - ANSWER:
 - NOTES:
 
@@ -275,5 +248,6 @@ Each question has: why it matters; the options, simplest or least risky first; a
 - default: (a); renaming code packages later costs one task.
 - evidence: none (naming is not a research question)
 - blocks: nothing — direction only
+- joins: D-03 if code package names become entangled; otherwise it stays a plain question
 - ANSWER:
 - NOTES:
