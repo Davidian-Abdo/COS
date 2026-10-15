@@ -2,6 +2,8 @@
 
 These are the decisions only you can make. Each one sets the direction of OCOS v1.0.0. The other documents mark every point that waits for you as `TO-CONFIRM (Q-nn)`.
 
+*Round 2, 2026-10-15. The questions were re-derived from the final documents after the research ([RESEARCH.md](RESEARCH.md)). Round-1 questions that the research settled were dropped, and the rest renumbered, most direction-setting first; [RESEARCH.md §9.2](RESEARCH.md#92-round-1-questions-settled-by-the-research) shows what was dropped, why, and the old → new numbering. No round-1 question had been answered, so nothing was carried over.*
+
 ## How to answer
 
 **(a) Write your answer.** Open this file on github.com, click the pencil icon (Edit), and write your answer on the `ANSWER:` line of a question — either one of the listed options (for example `(b)`) or your own words. Put any explanation, condition or doubt on the `NOTES:` line.
@@ -12,214 +14,234 @@ These are the decisions only you can make. Each one sets the direction of OCOS v
 
 **(d) What happens next.** The next working session reads every newly answered question, updates the documents accordingly, removes the matching `TO-CONFIRM` markers, and writes `APPLIED: <date>` under your answer. If you change your mind later, add a line `REOPEN:` under the question with your reason; it will be treated as open again and the documents will be revised.
 
+Each question has: why it matters; the options, simplest or least risky first; a recommendation; what it blocks; and `evidence:` — the research findings (`F-nn`, `V-nn` in RESEARCH.md) that inform the options.
+
 ---
 
-## Pilot, users and success
+## Market, pilot and how OCOS is used
 
-## Q-01 First pilot customer and work type
-- why it matters: v1.0.0 is built and judged on one real project (idea §13). The work type decides which prerequisites OCOS checks, which records it must import, and which numbers we can measure. A pilot with frequent, measurable coordination problems gives a clear verdict; a vague one gives none.
-- options: (a) the structural frame (formwork, rebar, concrete pours) of one building project run by a contractor you already work with (b) finishing works (partitions, plastering, MEP second fix) on one building, where many trades share each zone (c) a civil/infrastructure job (earthworks, networks) driven by equipment and deliveries (d) other — please name the contractor, project and work type
-- recommendation: (a) — pours have hard, easily checked prerequisites (inspection, rebar, concrete, pump), measurable quantities and costly idle crews, so improvements show quickly.
-- blocks: SPEC-002, SPEC-066; architecture §1 and §4.7 (pilot domain pack)
+## Q-01 Pilot market and region
+- why it matters: the market decides the contract forms (CCAG Travaux, Moroccan CCAG-T, FIDIC, AIA), the inspection actors (bureau de contrôle, ITP hold points), the data-protection law (GDPR or Moroccan law 09-08), the languages (French, Arabic, Darija, English), and which messaging app the site really uses. Everything else is easier to answer once this is known.
+- options: (a) Morocco — francophone and Arabic, mostly small and mid-size contractors, paper, Excel and WhatsApp, bureau de contrôle tied to construction insurance compulsory since 30 December 2024 (b) France — CCAG and OPC practice, GDPR, more site software already in use (c) Gulf / wider MENA — FIDIC contracts, large client-mandated platforms such as Aconex (d) another market, named in NOTES
+- recommendation: (a) if you have a contractor relationship there — the gap OCOS fills (messages and Excel, no platform) is widest, and French/Arabic tooling is your ecosystem's strength; but choose the market where you have a willing pilot contractor, which matters more than the market itself.
+- evidence: RESEARCH §8; F-13, F-18, F-19, F-20, F-22, F-23, F-35
+- blocks: SPEC-002, SPEC-210; IDEA_v2 §16; architecture §1, §12
 - ANSWER:
 - NOTES:
 
-## Q-02 First operator users
-- why it matters: decides who logs into OCOS, who only receives missions and reminders, and therefore how much training, interface and support the pilot needs.
-- options: (a) the contractor's site management only (site/works manager, planner, buyer); foremen, subcontractors and suppliers receive missions by message and answer by message (b) as (a) plus foremen using simple phone forms (c) everyone, including subcontractors and suppliers, has an OCOS account
-- recommendation: (b) — foremen hold most of the field facts, but asking outside companies to adopt a new tool would slow the pilot.
-- blocks: SPEC-004, SPEC-086; architecture §4.4, §4.9
+## Q-02 Pilot contractor, project and work type
+- why it matters: v1.0.0 is built and judged on one real project. The work type decides which prerequisites OCOS checks (the domain pack), which records it imports, and what can be measured. A pilot with frequent, measurable coordination problems gives a clear verdict.
+- options: (a) the structural frame (formwork, rebar, concrete pours) of one building, run by a general contractor with its own crews (b) finishing works (partitions, plastering, MEP second fix), where many subcontractors share each zone (c) a civil or infrastructure job driven by equipment and deliveries (d) other — name the contractor, project and work type in NOTES
+- recommendation: (a) — pours have hard, easily checked prerequisites (rebar, inspection hold point, concrete, pump) and costly idle crews; (b) is the stronger test of subcontractor commitments if the contractor mainly subcontracts.
+- evidence: F-06, F-17; REALITY_CHECK scenarios 1–3
+- blocks: SPEC-002, SPEC-066; architecture §1, §4.9
 - ANSWER:
 - NOTES:
 
-## Q-03 What "ready" means, and how far ahead OCOS looks
-- why it matters: OCOS checks readiness inside a time window before each package starts. Too short and problems are found too late to fix; too long and people are chased about work weeks away. It also fixes when a package must be fully ready (for example the Friday before the week of work).
-- options: (a) look ahead 3 weeks, check daily, a package must be `ready` 2 working days before its start (b) look ahead 6 weeks, check daily, weekly commitment meeting decides next week's work from the `ready` packages (the "Last Planner" practice) (c) follow the pilot contractor's current planning rhythm, to be described in NOTES
-- recommendation: (c) if the contractor already has a weekly planning rhythm, otherwise (a) — fit the company's habits first (idea §10).
-- blocks: SPEC-065, SPEC-066; architecture §4.3, §4.7
+## Q-03 Messaging channel for field input
+- why it matters: field facts arrive as messages, photos and voice notes; OCOS is useless if it cannot see them. WhatsApp's business platform allows task-specific automation but bans general-purpose AI assistants (since January 2026), and reading existing group chats through the official platform is not established. The choice also decides whether shadow mode can run without sending anything.
+- options: (a) a dedicated OCOS business number on the site's messaging app: people write or forward to it, and OCOS replies there; email-in and upload as fallbacks (b) as (a), plus periodic import of exported group chats (the app's own "export chat") for facts not forwarded, and for the baseline (c) OCOS joins the existing site groups (only if a compliant technical route is confirmed for the pilot) (d) no messaging in v1.0.0: email-in and upload only
+- recommendation: (b) — compliant, needs no new app, works in shadow mode, and the chat exports also give a baseline; (c) only after a technical and policy check.
+- evidence: F-09, F-32, F-36; V-07, V-16
+- blocks: SPEC-086, SPEC-132; architecture §4.1, §9
 - ANSWER:
 - NOTES:
 
-## Q-04 The metric that decides whether v1.0.0 worked
-- why it matters: the idea lists eleven metrics (spec §11). One or two must be the verdict, with a threshold agreed before the pilot, or any result can be argued either way.
-- options: (a) M-01 share of work packages genuinely ready, with target improvement over baseline (for example +20 percentage points) (b) M-04 avoidable idle hours of crews and equipment (for example −30 %) (c) M-02 blocker detection-to-resolution time (for example −40 %) (d) a combination you define
-- recommendation: (a) as the verdict with (b) as the money figure — readiness is what v1.0.0 directly acts on; idle hours turn it into cost for a director or investor.
+## Q-04 Who operates OCOS day to day in the pilot
+- why it matters: every AI reading is confirmed by a person in v1.0.0. That person's time is the pilot's main cost, and the pilot fails if nobody does it.
+- options: (a) a member of the OCOS team acts as operator ("concierge" pilot), with the site manager approving decisions; the site team learns the role over time (b) the contractor's site engineer or planner is the operator from day one, with a budget of about 20–30 minutes a day (c) the site manager is the operator
+- recommendation: (a) for the first 4–8 weeks, then (b) — it protects the site team's time while the interpreter is tuned, and shows what the job really costs before asking the contractor to take it on.
+- evidence: F-12, F-14, F-36; V-05
+- blocks: SPEC-004; architecture §4.1, §4.11
+- ANSWER:
+- NOTES:
+
+## Q-05 Planning method: fit the existing meeting, or introduce Last Planner
+- why it matters: OCOS's main output is the weekly meeting pack and its main input the meeting's action list. Introducing the full Last Planner routine (weekly plan from ready work only, PPC and reasons) gives better data but asks the team to change how they meet; lean adoption fails mostly on that change.
+- options: (a) fit the contractor's existing weekly meeting and minutes; OCOS adds a readiness section and records done / not done with reasons in the background (b) introduce a light Last Planner routine: commit only to ready work, record PPC and reasons each week (c) full Last Planner (pull planning, look-ahead sessions, weekly plan, PPC) with coaching
+- recommendation: (a) at the start, moving to (b) once the pack is trusted — the method's value is proven, but forcing it on day one adds a second change on top of OCOS.
+- evidence: F-01, F-02, F-04, F-07, F-16, F-37
+- blocks: SPEC-006; architecture §4.4
+- ANSWER:
+- NOTES:
+
+## Q-06 The metric that decides whether v1.0.0 worked
+- why it matters: one or two metrics, with a threshold agreed before the pilot, must give the verdict, or any result can be argued either way. The research showed that some round-1 metrics (idle hours) are rarely recorded on real sites.
+- options: (a) M-03 late discoveries — blockers first known less than 2 working days before start — target −50 % against baseline (b) M-01 PPC — target +15 percentage points (c) M-02 work made ready ahead (d) a combination you define
+- recommendation: (a) as the verdict with (b) as the method figure, and M-11 operator overhead reported beside both — late discovery is what OCOS changes directly and what a site manager feels; PPC is the industry's recognised measure.
+- evidence: F-04, F-05, F-07; V-17
 - blocks: SPEC-202
 - ANSWER:
 - NOTES:
 
-## Q-05 How the baseline is measured, and who sees OCOS's output meanwhile
-- why it matters: the idea requires a baseline before deployment. If the site team sees OCOS's warnings during the baseline weeks, they start acting on them and the "before" picture is no longer clean.
-- options: (a) silent shadow: OCOS runs on live data for N weeks, its output seen only by a reviewer (you or the OCOS team), while the site team measures M-01…M-11 with simple weekly forms (b) historical: rebuild the baseline from a recent finished project of the same contractor (c) comparison: a similar project of the same contractor without OCOS, measured in parallel
-- recommendation: (a) for 4–6 weeks, plus (b) where records allow — it measures the same project and also produces the shadow-mode accuracy data.
+## Q-07 How the baseline is measured, and who sees OCOS's output meanwhile
+- why it matters: a baseline is needed before OCOS influences the project. If the site team sees OCOS's warnings during the baseline weeks, they act on them and the "before" picture is no longer clean.
+- options: (a) retrospective: count late discoveries and missed promises from the last 2–3 months of exported chat history and meeting minutes, plus 3–4 weeks of PPC and reasons recorded by hand at the meeting; shadow output seen only by the OCOS team (b) silent shadow for 4–6 weeks on live data, output seen only by the OCOS team (c) a similar project of the same contractor without OCOS, measured in parallel
+- recommendation: (a) — cheaper and faster, and the chat history also builds the interpreter's evaluation set; the chat export needs the consent described in Q-13.
+- evidence: F-32; V-17, V-18
 - blocks: SPEC-142, SPEC-201; architecture §9
+- ANSWER:
+- NOTES:
+
+## Positioning and business
+
+## Q-08 Stand-alone, or alongside a project platform
+- why it matters: tools such as Touchplan, Procore, Autodesk and Aconex already cover parts of the problem. OCOS can stand alone (messages and Excel) or connect to a platform the pilot already uses. A connector costs development time; ignoring the platform means double records.
+- options: (a) stand-alone for v1.0.0; pilot chosen among contractors who use no project platform (b) stand-alone, plus export of OCOS's constraints and actions to the platform the pilot uses (file or API) (c) a two-way connector to the pilot's platform
+- recommendation: (a) — the clearest gap is contractors without a platform; it keeps v1.0.0 small. Say in NOTES if the likely pilot uses a platform.
+- evidence: F-10, F-26; RESEARCH §5
+- blocks: SPEC-213; IDEA_v2 §15; architecture §10
+- ANSWER:
+- NOTES:
+
+## Q-09 Business model and pilot terms
+- why it matters: a contractor's director will ask what they pay, for what, and who is accountable if it fails. It also decides what goes into the open repository and what stays a service.
+- options: (a) free pilot in exchange for data access, feedback and a case study; later open core free plus paid hosting, onboarding and support (b) paid pilot at a reduced fixed price with success criteria from Q-06 (c) fully open source, revenue only from services and configuration work
+- recommendation: (a) for the first pilot, with a written agreement on data use and the Q-06 criteria; (b) from the second pilot.
+- evidence: F-14 (cost is a top barrier), F-26
+- blocks: IDEA_v2 §15; architecture §11
 - ANSWER:
 - NOTES:
 
 ## Authority, autonomy and trust
 
-## Q-06 What the kernel guarantees versus what a company may configure
-- why it matters: the idea says mandatory safety, security and legal constraints cannot be disabled by ordinary configuration, but does not list them. This sets what every OCOS installation guarantees, and what a company can change for itself.
-- options: (a) the kernel guarantees the invariants of SPEC-106 plus a fixed list of mandatory gates (safety-critical decisions, statutory inspections and permits, quality hold points); configuration may only add or tighten rules, never relax them, and no one can waive a mandatory gate in OCOS (b) as (a), but a named person with an explicit "waive mandatory gate" authority may waive one, with rationale and a heavy trace (c) the kernel guarantees only SPEC-106; everything else, including which gates are mandatory, is company configuration
-- recommendation: (b) — real sites sometimes need a documented waiver (for example an engineer's written instruction), and refusing it entirely would push the decision outside OCOS's trace.
-- blocks: SPEC-031, SPEC-107; architecture §4.2, §4.7, §7.4
+## Q-10 What the kernel guarantees versus what a company may configure
+- why it matters: mandatory safety, security and legal constraints cannot be disabled by ordinary configuration, but the list must be fixed. The research adds the hold-point / witness-point distinction and the practice of verbal releases recorded later.
+- options: (a) the kernel fixes: hold points block until released; statutory and safety permits block; configuration may add or tighten gates, never relax them; nobody can waive a kernel gate in OCOS (b) as (a), but a named person with an explicit "waive gate" authority may waive one with rationale and a heavy trace (c) only the SPEC-106 invariants are fixed; every gate is company configuration
+- recommendation: (b) — real sites sometimes proceed on an engineer's written instruction; refusing it pushes the decision outside OCOS's trace. Whether *reported* (verbal) releases are accepted stays per inspection type in company configuration.
+- evidence: F-17, F-18, F-34; V-11
+- blocks: SPEC-031, SPEC-107; architecture §4.3, §4.9, §7.4
 - ANSWER:
 - NOTES:
 
-## Q-07 Which actions v1.0.0 may ever take on its own
-- why it matters: decides how far "autonomous" goes in the first release once shadow mode ends. Everything else stays proposal-only or needs a person's click.
-- options: (a) none: after shadow, every action needs a person's confirmation (b) low-risk communication only: requesting missing information, reminding about due commitments and unacknowledged missions, sending escalations along the configured path (c) as (b) plus issuing routine constraint-resolution missions to people inside the contractor's team
-- recommendation: (b) — these are the idea's own examples of permitted actions, they change nothing physical or contractual, and they remove most of the chasing effort.
+## Q-11 Which actions v1.0.0 may ever take on its own
+- why it matters: decides how far "autonomous" goes once shadow and confirm modes end. Automated chasing of outside companies can damage relationships and be read as a formal notice.
+- options: (a) none: every action needs a person's click (b) internal only: reminders and information requests to the contractor's own staff, escalations along the configured path; everything to outside companies stays in confirm (c) as (b), plus reminders to suppliers and subcontractors who have agreed to receive them (d) as (b), plus automatic confirmation of high-confidence readings in categories where M-08 shows reliability
+- recommendation: (b) — it removes most internal chasing with no external risk; (c) and (d) after the pilot's evidence.
+- evidence: F-34, F-39; V-14, V-15
 - blocks: SPEC-105; architecture §7.4, §9
 - ANSWER:
 - NOTES:
 
-## Q-08 When and how an action type leaves shadow mode
+## Q-12 When and how an action type leaves shadow or confirm mode
 - why it matters: sets the evidence bar before OCOS acts for real, and who carries that decision.
-- options: (a) the pilot contractor's project director decides per action type, after at least 4 weeks in shadow and 2 weeks in confirm mode, with at least 90 % of that type's actions labelled correct and none labelled incorrect with consequences (b) as (a) but you (the owner) and the contractor decide jointly (c) no fixed criteria; decided case by case
-- recommendation: (b) — fixed, written criteria protect both sides, and joint sign-off fits a first pilot of a new product.
+- options: (a) the contractor's project director decides per action type, after at least 4 weeks in shadow and 2 weeks in confirm mode, with at least 90 % of that type labelled correct and none labelled incorrect with consequences (b) as (a), but you (the owner) and the contractor decide jointly (c) case by case
+- recommendation: (b) — written criteria protect both sides; joint sign-off fits a first pilot.
+- evidence: F-30, F-33
 - blocks: SPEC-145; architecture §9
 - ANSWER:
 - NOTES:
 
-## Q-09 What counts as "verified"
-- why it matters: "no digital record alone proves that physical work occurred" (idea §12). This decides what proof turns a report into a verified fact — for a delivery, finished work or a passed inspection — and so how much extra effort each verification costs on site.
-- options: (a) always a named human verifier, with the evidence type set per kind of claim (for example delivery note photo for deliveries, inspector's record for inspections, foreman photo plus supervisor check for completed work) (b) as (a), but some evidence verifies automatically when it matches an external record exactly (for example a delivery note number matching the purchase order) (c) the contractor's current practice, described in NOTES
-- recommendation: (a) for v1.0.0 — simple and safe; automatic matching can be added after the pilot shows where it is reliable.
-- blocks: SPEC-088; architecture §4.4
+## Q-13 Records about named people: what is kept, who sees it, for how long
+- why it matters: OCOS keeps who said, promised and decided what, and reads messages that name workers. Under GDPR (CNIL) or Morocco's law 09-08 (CNDP) this needs a legitimate purpose, information of staff, limited retention, and possibly authorisation for transfers abroad. Using exported chat history for the baseline also needs consent. Getting this wrong can stop a pilot.
+- options: (a) individuals named only inside the contractor's team; outside companies at company level with a contact; no individual performance views; message authors pseudonymised in metrics; retention = project duration + contractual archive period; staff informed in writing before start (b) a policy written with the contractor's legal adviser, described in NOTES (c) everyone named everywhere with individual statistics
+- recommendation: (a), checked by the contractor's legal adviser — enough for traceability without becoming a staff-rating tool.
+- evidence: F-35; V-21
+- blocks: SPEC-190; architecture §13, §14
 - ANSWER:
 - NOTES:
 
-## Q-10 Records about named individuals: what is kept, who sees it, for how long
-- why it matters: OCOS records who promised what, who missed which deadline, who decided. That is personal data and can feel like surveillance; in many countries it is regulated (privacy law, employee representatives). Getting this wrong can stop a pilot.
-- options: (a) individuals are named inside the contractor's own team; outside companies are recorded at company level with a contact person; individual performance views are not provided; retention is the project's duration plus the contractual archive period (b) everyone named everywhere, with individual statistics (c) a policy set by the pilot contractor with their legal adviser, described in NOTES
-- recommendation: (a), confirmed by the contractor's legal adviser — enough for traceability without becoming a staff-rating tool.
-- blocks: SPEC-190; architecture §13
-- ANSWER:
-- NOTES:
-
-## Q-11 How strong the tamper evidence must be
-- why it matters: the idea requires tamper-evident records. A hash chain inside the system detects changes, but whoever runs the server could rewrite the whole chain. If the records may be used in disputes, a copy of the integrity checkpoints should live outside the operator's control.
-- options: (a) hash chain only, verified by a tool (b) hash chain plus daily signed checkpoints sent to the customer (for example by email or to their storage) (c) as (b) plus a public timestamping service
+## Q-14 How strong the tamper evidence must be
+- why it matters: records may be used in payment disputes. A hash chain detects changes, but whoever runs the server could rewrite the whole chain; a copy of the integrity checkpoints outside the operator's control prevents that.
+- options: (a) hash chain only, verified by a tool (b) hash chain plus daily signed checkpoints sent to the contractor (email or their storage) (c) as (b) plus a public timestamping service
 - recommendation: (b) — cheap, and the operator alone can no longer rewrite history unnoticed.
+- evidence: F-10, F-24; V-24
 - blocks: SPEC-186; architecture §6.5
 - ANSWER:
 - NOTES:
 
-## Data, sources and integration
+## Scope of v1.0.0
 
-## Q-12 Source of truth and writing back to other systems
-- why it matters: the idea keeps external systems authoritative for what they own. Still to decide: which records OCOS itself owns, and whether OCOS ever updates other systems (for example changing a delivery date in the purchasing system).
-- options: (a) read-only towards all external systems in v1.0.0; OCOS owns only missions, commitments recorded through it, requirement states, readiness, exceptions, decisions and the trace; disagreements are shown, never resolved silently (b) as (a), plus writing back a small agreed list of fields after human approval (c) OCOS becomes the master for coordination data the pilot currently keeps in spreadsheets
-- recommendation: (a) — no risk of corrupting the contractor's systems during a pilot; (c) can be added for spreadsheets the contractor is happy to retire.
-- blocks: SPEC-127; architecture §4.8, §10
+## Q-15 Source of truth and writing back to other systems
+- why it matters: external files and systems stay authoritative for what they own. Still to decide: which records OCOS itself owns, and whether it ever updates other systems (for example the constraint spreadsheet).
+- options: (a) read-only towards everything in v1.0.0; OCOS owns intake readings, missions, commitments recorded through it, requirement states, readiness, weekly plans, exceptions, decisions and the trace (b) as (a), plus OCOS becomes the master of the constraint list, replacing the spreadsheet with an exported copy (c) as (a), plus approved write-back of a few fields
+- recommendation: (a) at the start, (b) once the team trusts the board — retiring the spreadsheet is the adoption milestone.
+- evidence: F-31; V-20
+- blocks: SPEC-127; architecture §4.10, §10
 - ANSWER:
 - NOTES:
 
-## Q-13 Minimal import sources for planning, quantities, resources and procurement
-- why it matters: the idea asks for "a small number of existing sources". Each source means an adapter to build and maintain; the right ones are whatever the pilot contractor really uses today.
-- options: (a) spreadsheets only (Excel/CSV): schedule, quantities, crew and equipment assignments, purchase orders and deliveries (b) one scheduling-tool export (for example MS Project or Primavera P6) plus spreadsheets for the rest (c) the contractor's ERP or purchasing system through its API, plus (b) (d) the actual tools of the pilot, listed in NOTES
-- recommendation: (d), kept to at most three sources; failing that, (b) — schedules usually live in a scheduling tool, everything else in spreadsheets.
-- blocks: SPEC-120; architecture §4.8, §10
+## Q-16 Beam-stack products in v1.0.0
+- why it matters: Planitor and Chantier Manager are first-class integrations in the idea, but OCOS must be useful without them. Building their adapters only makes sense if the pilot uses them and they can export data.
+- options: (a) not in v1.0.0; optional adapters for the next release (b) in v1.0.0 if the pilot uses them (c) v1.0.0 built primarily around them
+- recommendation: (b) — real data without extra effort for the pilot; the generic adapter contract keeps OCOS independent. Say in NOTES whether each product has an export or API today.
+- evidence: F-26 (independence is part of the position)
+- blocks: SPEC-122; IDEA_v2 §12; architecture §10
 - ANSWER:
 - NOTES:
 
-## Q-14 How site reports come in and how missions reach people
-- why it matters: construction coordination happens on phones and in messaging groups. The channel decides whether foremen and subcontractors will actually answer, and how much interpretation the AI must do.
-- options: (a) OCOS phone-friendly web forms and links sent by email/SMS; replies come back through the link (b) as (a) plus a messaging app (for example WhatsApp Business) for sending missions and receiving replies, photos and voice notes (c) email only
-- recommendation: (b) if the pilot's site team already coordinates by messaging app, otherwise (a) — meet people where they already are.
-- blocks: SPEC-086, SPEC-121; architecture §4.4, §4.8, §4.9
+## Q-17 Monthly statements: how far v1.0.0 goes
+- why it matters: OCOS never certifies — certification is the maître d'œuvre's or Engineer's legal act. But disputes over monthly statements are where contractors lose money, and OCOS already holds the evidence.
+- options: (a) evidence packs per work package only; no payment lines (b) as (a), plus import of payment lines (bill of quantities / schedule of values) linked to work packages, and recording of agreed (attachement) and certified quantities from documents (c) as (b), plus a draft monthly statement (projet de décompte / situation) for the contractor's quantity surveyor to check
+- recommendation: (b) — high value in disputes, low risk; (c) after the pilot, since it moves OCOS into commercial territory.
+- evidence: F-20–F-25; V-12, V-13; REALITY_CHECK scenario 4
+- blocks: SPEC-024; IDEA_v2 §9; architecture §4.6
 - ANSWER:
 - NOTES:
 
-## Q-15 Beam-stack products in v1.0.0
-- why it matters: the idea makes Planitor and Chantier Manager first-class integrations but requires OCOS to be useful without them. Building their adapters in v1.0.0 only makes sense if the pilot uses them and they can export their data.
-- options: (a) not in v1.0.0; designed as optional adapters for the next release (b) in v1.0.0 if the pilot uses them: Planitor for planning intent and quantities, Chantier Manager for site execution and validated records (c) v1.0.0 is built primarily around them, with generic sources second
-- recommendation: (b) — real data with no extra effort for the pilot, while the generic adapter contract keeps OCOS independent. Please say in NOTES whether each product has an export or API today.
-- blocks: SPEC-122; architecture §10
-- ANSWER:
-- NOTES:
-
-## Q-16 Acceptance and payment certification in v1.0.0
-- why it matters: the idea keeps reported, measured, completed, accepted and payment-certified quantities distinct. Payment certification brings in commercial and contractual rules that v1.0.0's readiness focus does not need.
-- options: (a) v1.0.0 records reported, measured, completed and accepted quantities; payment certification is out of scope (b) as (a), plus certified quantities imported read-only from the contractor's commercial system (c) v1.0.0 also prepares certification proposals
-- recommendation: (a) — keeps the pilot on production; (b) is an easy follow-up.
-- blocks: SPEC-024
-- ANSWER:
-- NOTES:
-
-## Q-17 How the pilot company's configuration is produced
-- why it matters: the idea's Company Operations Compiler reads a company's documents and drafts its configuration. It is valuable, but large; v1.0.0 needs only one company configured.
-- options: (a) written by hand with the contractor, as versioned files reviewed by a person; the compiler comes later (b) a first, narrow compiler: AI drafts roles, approval limits and mission templates from the contractor's documents; a person reviews every item (c) full compiler in v1.0.0
-- recommendation: (a), keeping notes on every manual step — they become the compiler's specification.
-- blocks: SPEC-110; architecture §4.7, §16
-- ANSWER:
-- NOTES:
-
-## Q-18 Which AI agent roles exist in v1.0.0
-- why it matters: the idea describes a global steward, domain stewards, work-package coordinators and specialists. More roles mean more to test and more ways to be wrong in the first pilot.
-- options: (a) work-package coordinators plus a few specialists (constraint detection, delivery tracking, evidence check, schedule-impact analysis); people act as stewards (b) as (a) plus a global steward that only ranks exceptions for people (c) the full hierarchy
-- recommendation: (a) — it covers all nine v1.0.0 capabilities; stewardship stays with people until shadow data shows where an agent would help.
-- blocks: SPEC-163; architecture §4.6
+## Q-18 How the pilot company's configuration is produced
+- why it matters: the company's checklists, approval tables and templates are mostly Excel and Word. Typing them into configuration by hand takes weeks; a narrow AI-assisted compiler drafts them for review.
+- options: (a) written by hand with the contractor as versioned files reviewed by a person; compiler later (b) narrow compiler in v1.0.0: AI drafts requirement templates, roles, grants and vocabulary from the company's tables; a person accepts, edits or rejects every item (c) full compiler from any document in v1.0.0
+- recommendation: (b) — the onboarding scenario showed hand-writing is the bottleneck, and every drafted item is still reviewed.
+- evidence: F-13; V-22; REALITY_CHECK scenario 5
+- blocks: SPEC-110; IDEA_v2 §11; architecture §4.9
 - ANSWER:
 - NOTES:
 
 ## Openness, technology and operation
 
 ## Q-19 Open-source license and governance
-- why it matters: "the Linux of construction" depends on others adopting, extending and trusting OCOS. The license decides whether companies and vendors can build closed products on it; governance decides who controls the protocol and kernel.
-- options: (a) Apache-2.0 for everything; you lead as maintainer with a public proposal process for protocol and kernel changes (b) AGPL-3.0 for the kernel (anyone offering it as a service must publish changes), Apache-2.0 for protocol schemas, adapters and SDKs; same governance (c) as (a) or (b), with a neutral foundation as soon as other organisations contribute
-- recommendation: (a) now, (c) later — the most adoption-friendly, with a patent grant; note that (b) better protects against a competitor running a closed fork as a service.
-- blocks: architecture §11 (license row); repository LICENSE file
+- why it matters: "the Linux of construction" depends on others adopting, extending and trusting OCOS. The license decides whether others can build closed products on it; governance decides who controls the protocol and kernel.
+- options: (a) Apache-2.0 for everything; you lead as maintainer with a public proposal process (b) AGPL-3.0 for the kernel, Apache-2.0 for protocol schemas, adapters and SDKs (c) as (a) or (b), moving to a neutral foundation once other organisations contribute
+- recommendation: (a) now, (c) later — most adoption-friendly, with a patent grant; (b) better protects against a closed fork run as a service. Align with Q-09.
+- evidence: F-26 (the open core is the part incumbents are unlikely to copy)
+- blocks: IDEA_v2 §19; architecture §11; repository LICENSE file
 - ANSWER:
 - NOTES:
 
 ## Q-20 Hosting and data residency
-- why it matters: decides who runs OCOS for the pilot, where project data lives, and what the contractor's IT and legal teams must approve.
-- options: (a) a separate (single-tenant) installation per company, run by the OCOS team in a cloud region the customer chooses (b) installed and run on the customer's own servers or cloud (c) one shared multi-company service
-- recommendation: (a) for the pilot, built so (b) is always possible — simplest to support, data never mixed between companies, and true to an open-source product.
+- why it matters: decides who runs OCOS for the pilot, where data lives, and what the contractor's IT, legal and data-protection obligations require (for example CNDP authorisation for transfers out of Morocco).
+- options: (a) single-tenant installation per company, run by the OCOS team in a region acceptable under the pilot's data law (b) installed on the contractor's own servers or cloud (c) one shared multi-company service
+- recommendation: (a), built so (b) is always possible — data never mixed, simplest to support.
+- evidence: F-35
 - blocks: SPEC-210; architecture §11, §12, §13
 - ANSWER:
 - NOTES:
 
-## Q-21 AI model policy
-- why it matters: agents send project text, photos and documents to a model. Which provider, under what privacy terms, and whether a self-hosted model is required, affects quality, cost and what the contractor's legal team will accept.
-- options: (a) one commercial model provider under contract terms with no training on customer data and limited retention, behind a gateway that makes the provider replaceable; no agent framework, a thin in-house loop (b) a self-hosted open-weight model only, so no data leaves the installation (c) configurable per company: commercial provider by default, self-hosted on request
-- recommendation: (a) for the pilot, with (c) as the design target — best interpretation quality now, and the gateway keeps the kernel model-independent. Please name a preferred provider in NOTES if you have one.
-- blocks: SPEC-211; architecture §4.6, §11, §14
+## Q-21 AI model and speech policy
+- why it matters: the interpreter sends message text, photos and voice notes to a model. Provider, terms, region and whether a self-hosted model is required affect accuracy, cost and legality (data transfers abroad).
+- options: (a) one commercial provider under no-training, limited-retention terms, behind the gateway; open-weight fallback tested (b) self-hosted open-weight models only, so no data leaves the installation (c) configurable per company: commercial by default, self-hosted on request
+- recommendation: (a) for the pilot if the data-protection check (Q-13, Q-20) allows it, with (c) as the design target — reading Darija voice notes and messy messages needs the best available models now.
+- evidence: F-35, F-39; V-08
+- blocks: SPEC-211; architecture §4.8, §11, §14
 - ANSWER:
 - NOTES:
 
-## Q-22 Implementation language
-- why it matters: the language shapes who can contribute, how fast a small team builds, and which libraries are available for the formats construction uses.
-- options: (a) Python (typed) for kernel, agents and adapters; TypeScript for the web interface (b) TypeScript everywhere (c) a compiled language such as Go or Rust for the kernel, Python for agents and adapters (d) the language the Beam-stack products already use, named in NOTES
-- recommendation: (a) unless (d) gives a strong reason — Python has the best libraries for spreadsheets, IFC/BCF (IfcOpenShell) and AI providers.
-- blocks: architecture §11 (language row)
+## Q-22 Languages
+- why it matters: the interface, outbound messages and the interpreter must work in the languages the site writes and speaks. Spoken Darija in voice notes is much harder for AI than written French; unsupported languages go to a person to read.
+- options: (a) French only, with Arabic and Darija messages sent to a person to read (b) French and Modern Standard Arabic for the interface and messages; the interpreter also reads Darija written in Latin or Arabic script and Darija voice notes, with accuracy measured per language (c) English only (d) other, named in NOTES
+- recommendation: depends on Q-01; for Morocco (b), with Darija accuracy checked on the pilot's own message history before go-live; English for code and documentation in all cases.
+- evidence: RESEARCH §8; F-39
+- blocks: SPEC-005; architecture §4.1, §4.11
 - ANSWER:
 - NOTES:
 
-## Q-23 Database and event store
-- why it matters: the event log is the system's memory and must be append-only, replayable and backed up reliably.
-- options: (a) PostgreSQL for both the append-only event table and the current-state tables (b) a dedicated event-store database plus PostgreSQL for current state (c) SQLite files, one per project
-- recommendation: (a) — one proven open-source database, easy to self-host, ample for a pilot's volume.
-- blocks: architecture §11, §13
-- ANSWER:
-- NOTES:
-
-## Q-24 Product language(s)
-- why it matters: the interface, the messages to site staff and the AI's interpretation of reports must work in the language the site speaks; translation adds cost to every screen and message.
-- options: (a) the pilot site's language only (please name it) (b) the pilot site's language plus English (c) several languages from the start
-- recommendation: (b) — the site language for users, English for the open-source community and code.
-- blocks: SPEC-005; architecture §4.9
+## Q-23 Technology stack
+- why it matters: the language and database shape who can contribute and how fast a small team builds. Reading MS Project and Primavera files needs MPXJ, a Java library.
+- options: (a) Python (typed) back end, TypeScript web interface, PostgreSQL for the event table and projections; MPXJ run in a separate adapter process (b) TypeScript everywhere, PostgreSQL (c) Java/Kotlin back end (native MPXJ), TypeScript interface, PostgreSQL (d) the language the Beam-stack products use, named in NOTES
+- recommendation: (a) — best libraries for spreadsheets, documents and AI providers; MPXJ isolated in one adapter.
+- evidence: F-11; V-25
+- blocks: architecture §11
 - ANSWER:
 - NOTES:
 
 ## Naming
 
-## Q-25 Name of the product
-- why it matters: the idea uses "OCOS" and sometimes "OOF"; the repository is "COS". One name is needed for the code, documents, packages and any trademark check.
+## Q-24 Name of the product
+- why it matters: the idea uses "OCOS" and sometimes "OOF"; the repository is "COS". One name is needed for code, documents, packages and a trademark check.
 - options: (a) OCOS — Open Construction Operating System (b) COS, matching the repository (c) another name, given in NOTES
-- recommendation: (a) — it is the idea's main name and the documents already use it.
+- recommendation: (a) — the idea's main name, already used in every document.
+- evidence: none (naming is not a research question)
 - blocks: nothing — direction only (all documents use OCOS until answered)
 - ANSWER:
 - NOTES:
